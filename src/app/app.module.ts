@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { AgGridModule } from 'ag-grid-angular';
-import { MyDateRangePickerModule } from 'mydaterangepicker';
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -42,7 +42,7 @@ import { PercentFunctionModule } from './percent-function/percent-function.modul
     CountFunctionModule,
     FormsModule,
     HttpClientModule,
-    MyDateRangePickerModule,
+
     PercentFunctionModule,
     ReactiveFormsModule
   ],

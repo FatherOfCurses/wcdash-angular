@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.900.5",
+    "@angular-devkit/build-angular": "^0.1001.1",
     "@angular/animations": "~9.0.5",
     "@angular/cdk": "^9.1.1",
     "@angular/common": "~9.0.5",
@@ -27,8 +27,8 @@
     "chart.js": "^2.9.3",
     "core-js": "^2.5.4",
     "express": "latest",
-    "mydaterangepicker": "^4.2.1",
     "ng2-charts": "^2.3.0",
+    "ngx-daterangepicker-material": "^2.2.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
@@ -43,14 +43,14 @@
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "^4.4.1",
+    "karma": "^5.2.2",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "protractor": "~5.4.0",
+    "protractor": "^7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "typescript": "~3.7.5"
   }
 }

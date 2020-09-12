@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 // Plugins
-import { MyDateRangePickerModule } from 'mydaterangepicker';
+// import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { AgGridModule } from 'ag-grid-angular';
 
 // Components
@@ -24,7 +24,7 @@ import { ToptenreasonService } from './toptenreason/toptenreason.service';
     AgGridModule,
     CommonModule,
     FormsModule,
-    MyDateRangePickerModule
+    // MyDateRangePickerModule
   ],
   providers: [
     DateHandlerService,

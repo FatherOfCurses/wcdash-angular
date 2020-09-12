@@ -5,11 +5,10 @@ import { MessageService } from '../../message.service';
 import { Chart } from 'chart.js';
 import { ExceptionTrans } from '../../count-function/transactioncount/exceptiontrans.model';
 import { ExceptionTransService } from '../../exceptiontrans.service';
-import { Observable } from 'rxjs/Observable';
-import { IMyDrpOptions, IMyDateRangeModel } from 'mydaterangepicker';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import 'rxjs/add/observable/forkJoin';
+import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-aht',
@@ -35,15 +34,15 @@ export class AverageHandlingTimeComponent implements OnInit {
   chartLabels: Array<any> = [this.chartLabelsSubstring];
   serviceDown = false;
   isLoading = true;
-  myDateRangePickerOptions: IMyDrpOptions = {
-    showSelectDateText: true,
-    dateFormat: 'mm/dd/yyyy',
-    disableSince: {
-      year: Number(moment().format('YYYY')),
-      month: Number(moment().format('M')),
-      day: Number(moment().format('DD'))
-    }
-  };
+  // myDateRangePickerOptions: IMyDrpOptions = {
+  //   showSelectDateText: true,
+  //   dateFormat: 'mm/dd/yyyy',
+  //   disableSince: {
+  //     year: Number(moment().format('YYYY')),
+  //     month: Number(moment().format('M')),
+  //     day: Number(moment().format('DD'))
+  //   }
+  // };
   myForm: FormGroup;
   // default view when starting is last five days
   rangeStartDate = moment()
@@ -106,23 +105,23 @@ export class AverageHandlingTimeComponent implements OnInit {
       rangeStartDate,
       rangeEndDate
     );
-    Observable.forkJoin([response1, response2]).subscribe(
-      responseList => {
-        this.exceptionTransArray = responseList[0];
-        this.completeTransArray = responseList[1];
-        this.setUpChart();
-      },
-      error => {
-        this.serviceDown = true;
-        this.isLoading = false;
-        this.log(
-          'Error from requestExceptionDataFromMultipleSources: ' + error
-        );
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
+    // new Observable(forkJoin[response1, response2]).subscribe(
+    //   responseList => {
+    //     this.exceptionTransArray = responseList[0];
+    //     this.completeTransArray = responseList[1];
+    //     this.setUpChart();
+    //   },
+    //   error => {
+    //     this.serviceDown = true;
+    //     this.isLoading = false;
+    //     this.log(
+    //       'Error from requestExceptionDataFromMultipleSources: ' + error
+    //     );
+    //   },
+    //   () => {
+    //     this.isLoading = false;
+    //   }
+    // );
   }
 
   setLabels(item, index) {
@@ -135,71 +134,69 @@ export class AverageHandlingTimeComponent implements OnInit {
     return chartData;
   }
 
-  setUpChart() {
-    this.myChart = new Chart(this.myChart.nativeElement.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: this.completeTransArray.map(this.setLabels),
-        datasets: [
-          {
-            label: 'Completed',
-            backgroundColor: 'rgba(51, 204, 51, .73)',
-            borderColor: 'rgba(51, 204, 51, 0.33)',
-            data: this.completeTransArray.map(this.setData),
-            fill: false,
-            cubicInterpolationMode: 'monotone'
-          },
-          {
-            label: 'Exception',
-            backgroundColor: 'rgba(195, 59, 62, .73)',
-            borderColor: 'rgba(195, 59, 62, 0.33)',
-            data: this.exceptionTransArray.map(this.setData),
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: false,
-        maintainAspectRatio: false,
-        tooltips: {
-          mode: 'index',
-          intersect: false
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: true
-        },
-        scales: {
-          xAxes: [
-            {
-              display: true
-            }
-          ],
-          yAxes: [
-            {
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Seconds'
-              }
-            }
-          ]
-        }
-      }
-    });
-  }
+  // // setUpChart() {
+  //   this.myChart = new Chart(this.myChart.nativeElement.getContext('2d'), {
+  //     type: 'line',
+  //     data: {
+  //       labels: this.completeTransArray.map(this.setLabels),
+  //       datasets: [
+  //         {
+  //           label: 'Completed',
+  //           backgroundColor: 'rgba(51, 204, 51, .73)',
+  //           borderColor: 'rgba(51, 204, 51, 0.33)',
+  //           fill: false,
+  //            },
+  //         {
+  //           label: 'Exception',
+  //           backgroundColor: 'rgba(195, 59, 62, .73)',
+  //           borderColor: 'rgba(195, 59, 62, 0.33)',
+  //           // data: this.exceptionTransArray.map(this.setData),
+  //           fill: false
+  //         }
+  //       ]
+  //     },
+  //     options: {
+  //       responsive: false,
+  //       maintainAspectRatio: false,
+  //       tooltips: {
+  //         mode: 'index',
+  //         intersect: false
+  //       },
+  //       hover: {
+  //         mode: 'nearest',
+  //         intersect: true
+  //       },
+  //       scales: {
+  //         xAxes: [
+  //           {
+  //             display: true
+  //           }
+  //         ],
+  //         yAxes: [
+  //           {
+  //             display: true,
+  //             scaleLabel: {
+  //               display: true,
+  //               labelString: 'Seconds'
+  //             }
+  //           }
+  //         ]
+  //       }
+  //     }
+  //   });
+  // }
 
-  onDateRangeChanged(event: IMyDateRangeModel) {
-    this.log(this.dateRange.toString());
-    this.newStartDate = moment(event.beginJsDate.toString()).format(
-      'YYYY-MM-DD'
-    );
-    this.newEndDate = moment(event.endJsDate.toString()).format('YYYY-MM-DD');
-    this.requestExceptionDataFromMultipleSources(
-      this.newStartDate,
-      this.newEndDate
-    );
-  }
+  // onDateRangeChanged(event: IMyDateRangeModel) {
+  //   this.log(this.dateRange.toString());
+  //   this.newStartDate = moment(event.beginJsDate.toString()).format(
+  //     'YYYY-MM-DD'
+  //   );
+  //   this.newEndDate = moment(event.endJsDate.toString()).format('YYYY-MM-DD');
+  //   this.requestExceptionDataFromMultipleSources(
+  //     this.newStartDate,
+  //     this.newEndDate
+  //   );
+  // }
   onSelect(completeTrans: CompleteTrans): void {
     this.selectedCompleteTrans = completeTrans;
   }

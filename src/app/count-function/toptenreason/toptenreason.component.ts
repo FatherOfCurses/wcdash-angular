@@ -11,7 +11,7 @@ import { MessageService } from '../../message.service';
 import { Chart } from 'chart.js';
 import { ToptenreasonService } from './toptenreason.service';
 import { ExceptionReason } from './exceptionreason.model';
-import { IMyDrpOptions, IMyDateRangeModel } from 'mydaterangepicker';
+// import { IMyDrpOptions, IMyDateRangeModel } from 'mydaterangepicker';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -42,15 +42,15 @@ export class ToptenreasonComponent implements OnInit, AfterViewInit {
   chartCustLabels: Array<any> = [this.chartReasonLabelSubstring];
   isLoading = true;
   serviceDown = false;
-  myDateRangePickerOptions: IMyDrpOptions = {
-    showSelectDateText: true,
-    dateFormat: 'mm/dd/yyyy',
-    disableSince: {
-      year: Number(moment().format('YYYY')),
-      month: Number(moment().format('M')),
-      day: Number(moment().format('DD'))
-    }
-  };
+  // myDateRangePickerOptions: IMyDrpOptions = {
+  //   showSelectDateText: true,
+  //   dateFormat: 'mm/dd/yyyy',
+  //   disableSince: {
+  //     year: Number(moment().format('YYYY')),
+  //     month: Number(moment().format('M')),
+  //     day: Number(moment().format('DD'))
+  //   }
+  // };
   myForm: FormGroup;
   // default view when starting is last five days
   rangeStartDate = moment()
@@ -193,14 +193,14 @@ export class ToptenreasonComponent implements OnInit, AfterViewInit {
     );
   }
 
-  onDateRangeChanged(event: IMyDateRangeModel) {
-    this.log(this.topTenDateRange.toString());
-    this.newStartDate = moment(event.beginJsDate.toString()).format(
-      'YYYY-MM-DD'
-    );
-    this.newEndDate = moment(event.endJsDate.toString()).format('YYYY-MM-DD');
-    this.getTopTenReasonsArray(this.newStartDate, this.newEndDate);
-  }
+  // onDateRangeChanged(event: IMyDateRangeModel) {
+  //   this.log(this.topTenDateRange.toString());
+  //   this.newStartDate = moment(event.beginJsDate.toString()).format(
+  //     'YYYY-MM-DD'
+  //   );
+  //   this.newEndDate = moment(event.endJsDate.toString()).format('YYYY-MM-DD');
+  //   this.getTopTenReasonsArray(this.newStartDate, this.newEndDate);
+  // }
   setUpReasonsTable(): void {
     this.rowData = JSON.parse(JSON.stringify(this.topTenReasonsArray));
   }

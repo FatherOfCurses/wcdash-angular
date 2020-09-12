@@ -42,7 +42,7 @@ export class ToptencustComponent implements OnInit, AfterViewInit {
     const response1 = this.topTenCustService.getTopTenCustArray().subscribe(
       topTenCustArray => {
         this.topTenCustArray = topTenCustArray;
-        this.setUpTopTenCustChart();
+        // this.setUpTopTenCustChart();
       },
       error => {
         this.serviceDown = true;
@@ -64,51 +64,51 @@ export class ToptencustComponent implements OnInit, AfterViewInit {
     return chartTopTenData;
   }
 
-  setUpTopTenCustChart() {
-    this.myTopTenCustomerChart = new Chart(
-      this.myTopTenCustomerChart.nativeElement.getContext('2d'),
-      {
-        type: 'bar',
-        data: {
-          labels: this.topTenCustArray.map(this.setCountLabels),
-        datasets: [
-          {
-            label: 'Customer count',
-            backgroundColor: 'rgba(51, 204, 51, .73)',
-            borderColor: 'rgba(51, 204, 51, 0.33)',
-            data: this.topTenCustArray.map(this.setCountData),
-            fill: false
-          }
-        ],
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            text: 'Chart.js Line Chart'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: false
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            xAxes: [
-              {
-                display: true
-              }
-            ],
-            yAxes: [
-              {
-                display: true
-              }
-            ]
-          }
-        }
-      }
-    }
-  );
-}
+//   setUpTopTenCustChart() {
+//     this.myTopTenCustomerChart = new Chart(
+//       this.myTopTenCustomerChart.nativeElement.getContext('2d'),
+//       {
+//         type: 'bar',
+//         data: {
+//           labels: this.topTenCustArray.map(this.setCountLabels),
+//         datasets: [
+//           {
+//             label: 'Customer count',
+//             backgroundColor: 'rgba(51, 204, 51, .73)',
+//             borderColor: 'rgba(51, 204, 51, 0.33)',
+//             data: this.topTenCustArray.map(this.setCountData),
+//             fill: false
+//           }
+//         ],
+//         options: {
+//           responsive: true,
+//           title: {
+//             display: true,
+//             text: 'Chart.js Line Chart'
+//           },
+//           tooltips: {
+//             mode: 'index',
+//             intersect: false
+//           },
+//           hover: {
+//             mode: 'nearest',
+//             intersect: true
+//           },
+//           scales: {
+//             xAxes: [
+//               {
+//                 display: true
+//               }
+//             ],
+//             yAxes: [
+//               {
+//                 display: true
+//               }
+//             ]
+//           }
+//         }
+//       }
+//     }
+//   );
+// }
 }

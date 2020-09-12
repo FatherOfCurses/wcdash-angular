@@ -6,9 +6,8 @@ import {
   AfterViewInit,
   Input
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import 'rxjs/add/observable/forkJoin';
 
 import { CompleteTrans } from './completetrans.model';
 import { ExceptionTrans } from './exceptiontrans.model';
@@ -19,7 +18,7 @@ import { ExceptionTransService } from '../../exceptiontrans.service';
 import { MessageService } from '../../message.service';
 
 import { Chart } from 'chart.js';
-import { IMyDateRangeModel } from 'mydaterangepicker';
+// import { IMyDateRangeModel } from 'mydaterangepicker';
 
 @Component({
   selector: 'app-transactioncount',
@@ -79,21 +78,21 @@ export class TransactioncountComponent implements OnInit, AfterViewInit {
       this.dateRange[1].value,
       this.dateRange[2].value
     );
-    Observable.forkJoin([response1, response2]).subscribe(
-      responseList => {
-        this.exceptionTransCountArray = responseList[0];
-        this.completeTransCountArray = responseList[1];
-        this.setUpCountChart();
-      },
-      error => {
-        this.serviceDown = true;
-        this.isLoading = false;
-        this.log('Error from requestExceptionDataFromMultipleSources: ' + error);
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
+    // Observable.forkJoin([response1, response2]).subscribe(
+    //   responseList => {
+    //     this.exceptionTransCountArray = responseList[0];
+    //     this.completeTransCountArray = responseList[1];
+    //     this.setUpCountChart();
+    //   },
+    //   error => {
+    //     this.serviceDown = true;
+    //     this.isLoading = false;
+    //     this.log('Error from requestExceptionDataFromMultipleSources: ' + error);
+    //   },
+    //   () => {
+    //     this.isLoading = false;
+    //   }
+    // );
   }
 
   setCountLabels(item, index) {
@@ -106,67 +105,67 @@ export class TransactioncountComponent implements OnInit, AfterViewInit {
     return chartCountData;
   }
 
-  setUpCountChart() {
-    this.myTransCountChart = new Chart(
-      this.myTransCountChart.nativeElement.getContext('2d'),
-      {
-        type: 'bar',
-        data: {
-          labels: this.completeTransCountArray.map(this.setCountLabels),
-          datasets: [
-            {
-              stack: 'Stack 0',
-              label: 'Completed',
-              backgroundColor: 'rgba(51, 204, 51, .73)',
-              borderColor: 'rgba(51, 204, 51, 0.33)',
-              data: this.completeTransCountArray.map(this.setCountData),
-              fill: false
-            },
-            {
-              stack: 'Stack 0',
-              label: 'Exception',
-              backgroundColor: 'rgba(195, 59, 62, .73)',
-              borderColor: 'rgba(195, 59, 62, 0.33)',
-              data: this.exceptionTransCountArray.map(this.setCountData),
-              fill: false
-            }
-          ]},
-          options: {
-            responsive: true,
-            tooltips: {
-              mode: 'index',
-              intersect: false
-            },
-            hover: {
-              mode: 'nearest',
-              intersect: true
-            },
-            scales: {
-              xAxes: [
-                {
-                  display: true
-                }
-              ],
-              yAxes: [
-                {
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Number of Transactions'
-                  },
-                  display: true
-                }
-              ]
-            }
-          }
-      }
-    );
-  }
-
-  onDateRangeChanged(event: IMyDateRangeModel) {
-    this.date.setDateRange(event.beginJsDate, event.endJsDate)
-    .subscribe(dateRange => this.dateRange = dateRange);
-    this.requestDataFromMultipleSources(this.dateRange);
-  }
+  // setUpCountChart() {
+  //   this.myTransCountChart = new Chart(
+  //     this.myTransCountChart.nativeElement.getContext('2d'),
+  //     {
+  //       type: 'bar',
+  //       data: {
+  //         labels: this.completeTransCountArray.map(this.setCountLabels),
+  //         datasets: [
+  //           {
+  //             stack: 'Stack 0',
+  //             label: 'Completed',
+  //             backgroundColor: 'rgba(51, 204, 51, .73)',
+  //             borderColor: 'rgba(51, 204, 51, 0.33)',
+  //             data: this.completeTransCountArray.map(this.setCountData),
+  //             fill: false
+  //           },
+  //           {
+  //             stack: 'Stack 0',
+  //             label: 'Exception',
+  //             backgroundColor: 'rgba(195, 59, 62, .73)',
+  //             borderColor: 'rgba(195, 59, 62, 0.33)',
+  //             data: this.exceptionTransCountArray.map(this.setCountData),
+  //             fill: false
+  //           }
+  //         ]},
+  //         options: {
+  //           responsive: true,
+  //           tooltips: {
+  //             mode: 'index',
+  //             intersect: false
+  //           },
+  //           hover: {
+  //             mode: 'nearest',
+  //             intersect: true
+  //           },
+  //           scales: {
+  //             xAxes: [
+  //               {
+  //                 display: true
+  //               }
+  //             ],
+  //             yAxes: [
+  //               {
+  //                 scaleLabel: {
+  //                   display: true,
+  //                   labelString: 'Number of Transactions'
+  //                 },
+  //                 display: true
+  //               }
+  //             ]
+  //           }
+  //         }
+  //     }
+  //   );
+  // }
+  //
+  // onDateRangeChanged(event: IMyDateRangeModel) {
+  //   this.date.setDateRange(event.beginJsDate, event.endJsDate)
+  //   .subscribe(dateRange => this.dateRange = dateRange);
+  //   this.requestDataFromMultipleSources(this.dateRange);
+  // }
 
   private log(message: string) {
     this.message.console('Transaction Count Component: ' + message);
